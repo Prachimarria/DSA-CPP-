@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+void subset(vector<int>& arr, vector<int>& ans, int i, vector<vector<int>>& allsubsets) {
+    if (i == arr.size()) {
+        allsubsets.push_back(ans);
+        return;
+    }
+    
+    // include current element
+    ans.push_back(arr[i]);
+    subset(arr, ans, i + 1, allsubsets);
+    
+    // backtrack
+    ans.pop_back();
+    
+    // exclude current element
+    subset(arr, ans, i + 1, allsubsets);
+}
+
+int main() {
+    vector<int> arr = {1, 2, 3};
+    vector<int> ans;
+    vector<vector<int>> allsubsets;
+
+    subset(arr, ans, 0, allsubsets);
+
+    // print all subsets
+    for (auto subset : allsubsets) {
+        cout << "{ ";
+        for (auto num : subset) {
+            cout << num << " ";
+        }
+        cout << "}" << endl;
+    }
+
+    return 0;
+}
